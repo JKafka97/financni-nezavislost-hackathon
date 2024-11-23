@@ -3,12 +3,18 @@ import plotly
 import numpy as np
 import pandas as pd
 
+year_of_independance = 2030
+initial_investment = 10000  # Starting with $10,000
+mean_return = 0.08  # 8% average annual return
+volatility = 0.15  # 15% volatility
+years = 30  # Simulating for 30 years
+
 def simulate_data(initial_value, num_of_years, mean_return, volatility):
 
     investment_values = [initial_value]
-    annual_returns = np.random.normal(loc=mean_return, scale=volatility, size=num_of_years)
+    # annual_returns = np.random.normal(loc=mean_return, scale=volatility, size=num_of_years)
 
-    for year in range(num_of_years):
+    for _ in range(num_of_years):
         investment_values.append(investment_values[-1] * (1 + mean_return))
 
     years_range = np.arange(2024, 2024 + num_of_years + 1)
@@ -19,14 +25,7 @@ def simulate_data(initial_value, num_of_years, mean_return, volatility):
 
     return df
 
-initial_investment = 10000  # Starting with $10,000
-mean_return = 0.08  # 8% average annual return
-volatility = 0.15  # 15% volatility
-years = 30  # Simulating for 30 years
-
 investment_data = simulate_data(initial_investment,years, mean_return, volatility)
-
-year_of_independance = 2030
 
 def plot_investment(
         investment_data: pd.DataFrame,
