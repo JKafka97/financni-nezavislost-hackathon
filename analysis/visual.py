@@ -1,9 +1,9 @@
-import plotly.express as px
+import plotly.graph_objects as go
 import plotly
 import numpy as np
 import pandas as pd
 
-year_of_independance = 2030
+year_of_independance = 2040
 initial_investment = 10000  # Starting with $10,000
 mean_return = 0.08  # 8% average annual return
 volatility = 0.15  # 15% volatility
@@ -25,25 +25,50 @@ def simulate_data(initial_value, num_of_years, mean_return, volatility):
 
     return df
 
-investment_data = simulate_data(initial_investment,years, mean_return, volatility)
-
 def plot_investment(
         investment_data: pd.DataFrame,
         year_of_independance: int
         ) -> plotly.graph_objects.Figure:
-
-    fig = px.line(investment_data, x='year', y='investment',
-                template='plotly_white')
+    """
+    This function creates a plotly line figure with investment data thru years.
     
-    fig.update_xaxes(title_text='Years')
-    fig.update_yaxes(title_text='Value of investment (CZK)')
-    fig.add_vline(x=year_of_independance, 
-                  line_width=3, 
-                  line_dash="dash", 
-                  line_color="red",
-                  annotation_text=f"Independent in {year_of_independance}")
+    Parameters:
+    investment_data (pd.DateFrame): Dataframe of investments thru years 
+    year_of_independance: Year, when customer will achive financial independance
+    
+    Returns:
+    plotly.figure: Plotly figure that can be displayed
+    """
+    # Iniciate figure
+    fig = go.Figure()
+    # Add line for investment
+    fig.add_trace(
+        go.Scatter(
+            x=investment_data["year"],
+            y=investment_data["investment"],
+            name="Investiční portfolio",
+            line=dict(color="#2ecc71"),
+        )
+    )
+    # Update visuals
+    fig.update_layout(
+        title="Cesta k finanční NEZÁVISLOSTI!",
+        xaxis_title="Roky",
+        yaxis_title="Částka (CZK)",
+        hovermode="x unified",
+        showlegend=True,
+        template="plotly_white"
+    )
+    # Creates dashed v line fro year_of_independance, if exists
+    if year_of_independance:
+        fig.add_vline(x=year_of_independance, 
+            line_dash="dash",
+            annotation_text="Rok nezávislosti!", 
+            annotation_position="bottom right",
+            line_color="red")
 
     return fig
 
+investment_data = simulate_data(initial_investment,years, mean_return, volatility)
 fig = plot_investment(investment_data, year_of_independance)
 fig.show()
