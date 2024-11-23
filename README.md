@@ -1,0 +1,1 @@
+# financni-nezavyslost-hackathon
