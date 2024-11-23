@@ -2,8 +2,6 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
-from datetime import datetime
-
 
 def calculate_fi_number(monthly_expenses, safe_withdrawal_rate=4):
     annual_expenses = monthly_expenses * 12
@@ -132,7 +130,7 @@ col3, col4, col5 = st.columns(3)
 with col3:
     st.metric(
         "Počáteční cíl finanční nezávislosti",
-        f"{metrics['initial_fi_target']:,.0f} CZK",
+        f"{metrics['initial_fi_target']:,.0f} CZK".replace(",", " "),
     )
 
 with col4:
@@ -161,7 +159,7 @@ for milestone in milestones:
         years = int(years_to_milestone)
         months = int((years_to_milestone - years) * 12)
         milestone_data.append(
-            {"Milníky": f"{milestone*100:.0f}% FI", "Čas": f"{years}r {months}m"}
+            {"Milníky finanční nezávislosti (%)": f"{milestone*100:.0f}", "Čas": f"{years}r {months}m"}
         )
 
 st.table(pd.DataFrame(milestone_data))
