@@ -1,4 +1,4 @@
-name: hack
+name: venv
 channels:
   - defaults
 dependencies:
