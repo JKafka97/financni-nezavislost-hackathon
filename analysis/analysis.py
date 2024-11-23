@@ -14,6 +14,10 @@ n = 12
 
 
 def years_to_financial_independence(savings):
+    # if savings_1 == 0:
+    #     t = math.log(1 + (target_capital * average_interest) 
+    #             / (monthly_amount_to_invest * n)) / (n * math.log(1 + average_interest / n))
+    # elif savings_1 > 0:
     t = math.log((target_capital * average_interest / n + monthly_amount_to_invest)
                 / (savings * average_interest / n + monthly_amount_to_invest)) \
         / (n * math.log(1 + average_interest / n))
