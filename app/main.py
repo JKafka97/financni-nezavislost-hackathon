@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
-import plotly.graph_objects as go
-
+import numpy as np
 from calculation import calculate_fi_metrics
 from visual import plot_investment
 
@@ -88,10 +87,11 @@ st.plotly_chart(
 st.subheader("Analýza milníků")
 milestones = np.array([0.25, 0.5, 0.75, 1.0])
 years_to_independance = metrics["years_to_fi"]
+milestones_string = np.array(["25", "50", "70", "100"])
 milestone_years = milestones * years_to_independance
 
 milestone_data = pd.DataFrame(
-    {"Milníky finanční nezávislosti (%)": milestones * 100, "Čas": milestone_years}
+    {"Milníky finanční nezávislosti (%)": milestones_string, "Čas": milestone_years}
 )
 
 milestone_data["Čas"] = milestone_data["Čas"].apply(
