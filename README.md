@@ -1,27 +1,27 @@
-# financni-nezavislost-hackathon
-Kalkulačka sloužící výpočtu odchodu na zasloužený důchod plný finanční nezávyslosti
+# Finanční Nezávislost Hackathon 🎉
 
-Jak spustit lokálně?
-1, instalace závislostí
-# conda env create -f environment.yml
-# conda create -n hack python=3.12
-# conda env remove -n hack
-NEBO
-# pip install -r requirements.txt
-NÁSLEDNĚ
-# streamlit run main.py
+Tato kalkulačka vám pomůže spočítat, kdy můžete odejít do zaslouženého důchodu s plnou finanční nezávislostí. 🌟
 
+## 🏃‍♂️ Jak spustit projekt lokálně?
 
-Technologie:
-streamlit
+1. **Nainstalujte závislosti** dle vaší preferované metody:
 
+   ### Použití Conda
+   ```bash
+   # Vytvoření prostředí z environment.yml
+   conda env create -f environment.yml
 
+   # Alternativní vytvoření prostředí s Pythonem 3.12
+   conda create -n venv python=3.12
 
+   # Odstranění prostředí (volitelné)
+   conda env remove -n venv
+   ```
+   ### Použití pip
+    ```bash
+    pip install -r requirements.txt
+    ```
 
-# streamlit run main.py
-
-# conda env export --name hack > environment.yml
-# pip list --format=freeze > requirements.txt
-
-# conda env export --name hack > environment.yml
-# pip list --format=freeze > requirements.txt
+## 💻 Použité technologie
+- [Streamlit](https://streamlit.io/) – Pro rychlý a snadný vývoj interaktivních aplikací.
+- [Plotly](https://plotly.com/) – Pro tvorbu vizualizací a grafů.
