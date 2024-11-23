@@ -102,7 +102,10 @@ for milestone in milestones:
             }
         )
 
-st.table(pd.DataFrame(milestone_data))
+milestone_data = pd.DataFrame(milestone_data)
+
+if not milestone_data.empty:
+    st.dataframe(milestone_data, hide_index=True)
 
 # Add Fin-gram link button after inputs
 st.markdown("---")
