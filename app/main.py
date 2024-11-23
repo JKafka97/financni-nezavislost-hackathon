@@ -139,12 +139,12 @@ with col4:
     if metrics["years_to_fi"] is not None:
         years = int(metrics["years_to_fi"])
         months = int((metrics["years_to_fi"] - years) * 12)
-        st.metric("Čas k finanční nezávislosti", f"{years}y {months}m")
+        st.metric("Čas k finanční nezávislosti", f"{years}r {months}m")
     else:
         st.metric("Čas do finanční nezávislosti", "Více než 50 let")
 
 with col5:
-    st.metric("Měsíční míra úspor", f"{metrics['monthly_savings_rate']:.1f}%")
+    st.metric("Měsíční míra úspor", f"{metrics['monthly_savings_rate']:.1f} %")
 
 st.plotly_chart(create_timeline_plot(metrics["fire_data"]), use_container_width=True)
 
@@ -161,7 +161,7 @@ for milestone in milestones:
         years = int(years_to_milestone)
         months = int((years_to_milestone - years) * 12)
         milestone_data.append(
-            {"Milníky": f"{milestone*100:.0f}% FI", "Čas": f"{years}y {months}m"}
+            {"Milníky": f"{milestone*100:.0f}% FI", "Čas": f"{years}r {months}m"}
         )
 
 st.table(pd.DataFrame(milestone_data))
@@ -173,7 +173,7 @@ st.markdown(
     <div style='text-align: center'>
         <a href='https://fin-gram-cc79f963fdbc.herokuapp.com/' target='_blank'>
             <button style='
-                background-color: #00aeef;
+                background-color: #00395d;
                 color: white;
                 padding: 10px 20px;
                 border: none;
@@ -181,12 +181,29 @@ st.markdown(
                 cursor: pointer;
                 font-size: 16px;
                 margin: 10px 0;
+                transition: all 0.3s ease;
             '>
                 Finační poradce na klik 🤖
             </button>
         </a>
     </div>
+    <style>
+        button:hover {
+            background-color: #00aeef !important;
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    </style>
     """,
     unsafe_allow_html=True,
 )
-st.markdown("---")
+
+st.markdown(
+    """
+    <div style='text-align: center; color: gray; padding: 20px 0;'>
+        © 2024 Path to Financial FREEDOM! All rights reserved.
+        <br>Created with ❤️ by ušetřené==vydělané
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
