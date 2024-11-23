@@ -1,31 +1,53 @@
 import streamlit as st
 import numpy as np
 import pandas as pd
-from visual import plot_investment
 import plotly.graph_objects as go
 
 from calculation import calculate_fi_metrics
-
+from visual import plot_investment
 
 st.set_page_config(page_title="Path to Financial FREEDOM!", layout="wide")
 
-st.title("Path to Financial FREEDOM! 💰")
+st.markdown(
+    """
+    <h2 style="text-align: center;">Path to Financial FREEDOM! 💰</h2>
+    """,
+    unsafe_allow_html=True,
+)
 
-col1, col2 = st.columns(2)
+# Main inputs - using a single column to match the layout
+col1 = st.columns(1)[0]
 
 with col1:
-    st.subheader("Vaše údaje")
+    st.subheader("Vaše údaje ✏️")
     monthly_savings = st.number_input(
         "Volná částka na investice (CZK)", value=30000, step=1000
     )
     monthly_expenses = st.number_input("Měsíční náklady (CZK)", value=50000, step=1000)
     current_savings = st.number_input("Úspory (CZK)", value=600000, step=10000)
 
-with col2:
-    st.subheader("Předpoklady")
-    investment_return = st.slider("Očekávaný výnos (%)", 1, 15, 8)
-    inflation_rate = st.slider("Očekávaná inflace (%)", 1, 10, 3)
-    safe_withdrawal_rate = st.slider("Výběr úroků (%)", 1, 10, 4)
+# Advanced settings header aligned with inputs
+st.subheader("Pokročilé nastavení 🔧")
+
+# Advanced options in expander
+with st.expander("Upravit předpoklady výpočtu", expanded=False):
+    col_adv1, col_adv2, col_adv3 = st.columns(3)
+
+    with col_adv1:
+        investment_return = st.slider("Očekávaný výnos (%)", 1, 15, 8)
+    with col_adv2:
+        inflation_rate = st.slider("Očekávaná inflace (%)", 1, 10, 3)
+    with col_adv3:
+        safe_withdrawal_rate = st.slider("Výběr úroků (%)", 1, 10, 4)
+
+    st.info(
+        """
+        💡 Tyto hodnoty ovlivňují výpočet vaší cesty k finanční nezávislosti:
+        - Očekávaný výnos: Průměrný roční výnos vašich investic
+        - Očekávaná inflace: Předpokládaná míra růstu cen
+        - Výběr úroků: Bezpečná míra ročního čerpání z portfolia
+        """
+    )
 
 metrics = calculate_fi_metrics(
     monthly_savings=monthly_savings,
@@ -56,7 +78,10 @@ with col4:
 with col5:
     st.metric("Měsíční míra úspor", f"{metrics['monthly_savings_rate']:.1f} %")
 
-st.plotly_chart(plot_investment(metrics["fire_data"], metrics["years_to_fi"]), use_container_width=True)
+st.plotly_chart(
+    plot_investment(metrics["fire_data"], metrics["years_to_fi"]),
+    use_container_width=True,
+)
 
 st.subheader("Analýza milníků")
 milestones = [0.25, 0.5, 0.75, 1.0]
@@ -71,7 +96,10 @@ for milestone in milestones:
         years = int(years_to_milestone)
         months = int((years_to_milestone - years) * 12)
         milestone_data.append(
-            {"Milníky finanční nezávislosti (%)": f"{milestone*100:.0f}", "Čas": f"{years}r {months}m"}
+            {
+                "Milníky finanční nezávislosti (%)": f"{milestone*100:.0f}",
+                "Čas": f"{years}r {months}m",
+            }
         )
 
 st.table(pd.DataFrame(milestone_data))
