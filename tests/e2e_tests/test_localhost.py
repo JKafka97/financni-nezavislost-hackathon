@@ -3,7 +3,7 @@ from playwright.sync_api import sync_playwright
 
 LOCAL_TEST_URL = 'http://localhost:8501'
 
-def run_test(input_selector, input_value, expected_value, headless=False):
+def run_test(input_selector, input_value, expected_value, headless=True):
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=headless)
         page = browser.new_page()
@@ -11,7 +11,7 @@ def run_test(input_selector, input_value, expected_value, headless=False):
         page.wait_for_selector(input_selector)
         page.fill(input_selector, input_value)
         page.keyboard.press("Enter")
-        sleep(2)
+        sleep(1)
         metric_value = page.locator('div[data-testid="stMetricValue"] div').all_text_contents()[1]
         if metric_value.strip() == expected_value.strip():
             print(f"Value is correct! ({metric_value.strip()})")
