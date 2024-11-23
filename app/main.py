@@ -1,40 +1,10 @@
 import streamlit as st
 import numpy as np
 import pandas as pd
+from visual import plot_investment
 import plotly.graph_objects as go
 
 from calculation import calculate_fi_metrics
-
-
-
-def create_timeline_plot(df):
-    fig = go.Figure()
-
-    fig.add_trace(
-        go.Scatter(
-            x=df["years"],
-            y=df["portfolio_real"],
-            name="Portfolio (Real)",
-            line=dict(color="#2ecc71"),
-        )
-    )
-    fig.add_trace(
-        go.Scatter(
-            x=df["years"],
-            y=df["fi_target"],
-            name="FI Target",
-            line=dict(color="#e74c3c"),
-        )
-    )
-
-    fig.update_layout(
-        title="Path to Financial FREEDOM!",
-        xaxis_title="Years",
-        yaxis_title="Amount (CZK)",
-        hovermode="x unified",
-        showlegend=True,
-    )
-    return fig
 
 
 st.set_page_config(page_title="Path to Financial FREEDOM!", layout="wide")
@@ -86,7 +56,7 @@ with col4:
 with col5:
     st.metric("Měsíční míra úspor", f"{metrics['monthly_savings_rate']:.1f} %")
 
-st.plotly_chart(create_timeline_plot(metrics["fire_data"]), use_container_width=True)
+st.plotly_chart(plot_investment(metrics["fire_data"], metrics["years_to_fi"]), use_container_width=True)
 
 st.subheader("Analýza milníků")
 milestones = [0.25, 0.5, 0.75, 1.0]
