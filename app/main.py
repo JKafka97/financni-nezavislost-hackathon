@@ -1,13 +1,13 @@
 import streamlit as st
-import numpy as np
 import pandas as pd
-import plotly.graph_objects as go
-
+import numpy as np
 from calculation import calculate_fi_metrics
 from visual import plot_investment
 
+# Configure the page title and layout
 st.set_page_config(page_title="Path to Financial FREEDOM!", layout="wide")
 
+# Main header
 st.markdown(
     """
     <h2 style="text-align: center;">Path to Financial FREEDOM! 💰</h2>
@@ -15,21 +15,18 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# Main inputs - using a single column to match the layout
+# Input section for user data
 col1 = st.columns(1)[0]
 
 with col1:
     st.subheader("Vaše údaje ✏️")
-    monthly_savings = st.number_input(
-        "Volná částka na investice (CZK)", value=30000, step=1000
-    )
+    monthly_savings = st.number_input("Volná částka na investice (CZK)", value=30000, step=1000)
     monthly_expenses = st.number_input("Měsíční náklady (CZK)", value=50000, step=1000)
     current_savings = st.number_input("Úspory (CZK)", value=600000, step=10000)
 
-# Advanced settings header aligned with inputs
+# Advanced settings section
 st.subheader("Pokročilé nastavení 🔧")
 
-# Advanced options in expander
 with st.expander("Upravit předpoklady výpočtu", expanded=False):
     col_adv1, col_adv2, col_adv3 = st.columns(3)
 
@@ -49,6 +46,7 @@ with st.expander("Upravit předpoklady výpočtu", expanded=False):
         """
     )
 
+# Calculate financial independence metrics
 metrics = calculate_fi_metrics(
     monthly_savings=monthly_savings,
     monthly_expenses=monthly_expenses,
@@ -58,6 +56,7 @@ metrics = calculate_fi_metrics(
     safe_withdrawal_rate=safe_withdrawal_rate,
 )
 
+# Results section with key metrics
 st.subheader("Výsledky")
 col3, col4, col5 = st.columns(3)
 
@@ -78,18 +77,21 @@ with col4:
 with col5:
     st.metric("Měsíční míra úspor", f"{metrics['monthly_savings_rate']:.1f} %")
 
+# Display investment chart
 st.plotly_chart(
     plot_investment(metrics["fire_data"], metrics["years_to_fi"]),
     use_container_width=True,
 )
 
+# Milestones Analysis
 st.subheader("Analýza milníků")
 milestones = np.array([0.25, 0.5, 0.75, 1.0])
 years_to_independance = metrics["years_to_fi"]
+milestones_string = np.array(["25", "50", "70", "100"])
 milestone_years = milestones * years_to_independance
 
 milestone_data = pd.DataFrame(
-    {"Milníky finanční nezávislosti (%)": milestones * 100, "Čas": milestone_years}
+    {"Milníky finanční nezávislosti (%)": milestones_string, "Čas": milestone_years}
 )
 
 milestone_data["Čas"] = milestone_data["Čas"].apply(
@@ -98,13 +100,9 @@ milestone_data["Čas"] = milestone_data["Čas"].apply(
 
 # Display 'Analýza milníků' table
 if not milestone_data.empty:
-    st.dataframe(
-        milestone_data,
-        hide_index=True,
-        use_container_width=True,
-    )
+    st.dataframe(milestone_data, hide_index=True, use_container_width=True)
 
-# Add Fin-gram link button after inputs
+# Add Fin-gram link button for additional financial guidance
 st.markdown("---")
 st.markdown(
     """
@@ -136,6 +134,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
+# Footer information
 st.markdown(
     """
     <div style='text-align: center; color: gray; padding: 20px 0;'>
