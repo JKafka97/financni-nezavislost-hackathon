@@ -103,9 +103,13 @@ for milestone in milestones:
         )
 
 milestone_data = pd.DataFrame(milestone_data)
-
+# Display 'Analýza milníků' table
 if not milestone_data.empty:
-    st.dataframe(milestone_data, hide_index=True)
+    st.dataframe(
+        milestone_data,
+        hide_index=True,
+        use_container_width=True,
+    )
 
 # Add Fin-gram link button after inputs
 st.markdown("---")

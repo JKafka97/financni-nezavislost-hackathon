@@ -1,6 +1,7 @@
 import plotly.graph_objects as go
 import plotly
 import pandas as pd
+import datetime
 
 def plot_investment(
         investment_data: pd.DataFrame,
@@ -20,7 +21,8 @@ def plot_investment(
     fig = go.Figure()
 
     # Add current year to years
-    investment_data["years"] = investment_data["years"] + 2024
+    curr_year = datetime.datetime.now().year
+    investment_data["years"] = investment_data["years"] + curr_year
 
     # Format values for hoverover values
     formatted_port = [f"{val:,.0f}".replace(",", " ") for val in investment_data["portfolio_real"]]
