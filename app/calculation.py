@@ -22,6 +22,9 @@ def calculate_fi_metrics(
         1 + monthly_inflation_rate
     ) - 1
 
+    if real_monthly_return == 0.0:
+        real_monthly_return = 1e-10
+
     max_years = 50
     years = np.linspace(0, max_years, max_years * 12 + 1)
     df = pd.DataFrame({"years": years})
