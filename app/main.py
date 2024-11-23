@@ -93,7 +93,7 @@ milestone_data = pd.DataFrame(
 )
 
 milestone_data["Čas"] = milestone_data["Čas"].apply(
-    lambda x: f"{int(x)} r {round((x - int(x)) * 12)} m"
+    lambda x: f"{int(x)}r {round((x - int(x)) * 12)}m"
 )
 
 # Display 'Analýza milníků' table
