@@ -84,25 +84,18 @@ st.plotly_chart(
 )
 
 st.subheader("Analýza milníků")
-milestones = [0.25, 0.5, 0.75, 1.0]
-initial_target = metrics["initial_fi_target"]
-fire_data = metrics["fire_data"]
+milestones = np.array([0.25, 0.5, 0.75, 1.0])
+years_to_independance = metrics["years_to_fi"]
+milestone_years = milestones * years_to_independance
 
-milestone_data = []
-for milestone in milestones:
-    milestone_mask = fire_data["portfolio_real"] >= (initial_target * milestone)
-    if milestone_mask.any():
-        years_to_milestone = fire_data.loc[milestone_mask, "years"].iloc[0]
-        years = int(years_to_milestone)
-        months = int((years_to_milestone - years) * 12)
-        milestone_data.append(
-            {
-                "Milníky finanční nezávislosti (%)": f"{milestone*100:.0f}",
-                "Čas": f"{years}r {months}m",
-            }
-        )
+milestone_data = pd.DataFrame(
+    {"Milníky finanční nezávislosti (%)": milestones * 100, "Čas": milestone_years}
+)
 
-milestone_data = pd.DataFrame(milestone_data)
+milestone_data["Čas"] = milestone_data["Čas"].apply(
+    lambda x: f"{int(x)} r {round((x - int(x)) * 12)} m"
+)
+
 # Display 'Analýza milníků' table
 if not milestone_data.empty:
     st.dataframe(
