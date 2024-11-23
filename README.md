@@ -1,2 +1,1 @@
 # financni-nezavislost-hackathon
-dd
