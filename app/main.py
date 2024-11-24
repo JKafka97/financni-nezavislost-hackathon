@@ -85,21 +85,21 @@ st.plotly_chart(
 
 # Milestones Analysis
 st.subheader("Analýza milníků")
-milestones = np.array([0.25, 0.5, 0.75, 1.0])
-years_to_independance = metrics["years_to_fi"]
-milestones_string = np.array(["25", "50", "70", "100"])
-milestone_years = milestones * years_to_independance
-
-milestone_data = pd.DataFrame(
-    {"Milníky finanční nezávislosti (%)": milestones_string, "Čas": milestone_years}
-)
-
-milestone_data["Čas"] = milestone_data["Čas"].apply(
-    lambda x: f"{int(x)}r {round((x - int(x)) * 12)}m"
-)
-
-# Display 'Analýza milníků' table
-if not milestone_data.empty:
+if metrics["years_to_fi"]:
+    # Calculate milestones
+    milestones = np.array([0.25, 0.5, 0.75, 1.0])
+    years_to_independance = metrics["years_to_fi"]
+    milestone_years = milestones * years_to_independance
+    # Add to DF
+    milestone_data = pd.DataFrame(
+        {"Milníky finanční nezávislosti (%)": milestones * 100, "Čas": milestone_years}
+    )
+    # Format data
+    milestone_data["Milníky finanční nezávislosti (%)"] = np.round(milestone_data["Milníky finanční nezávislosti (%)"]).astype(str)
+    milestone_data["Čas"] = milestone_data["Čas"].apply(
+        lambda x: f"{int(x)}r {round((x - int(x)) * 12)}m"
+    )
+    # Display
     st.dataframe(milestone_data, hide_index=True, use_container_width=True)
 
 # Add Fin-gram link button for additional financial guidance
