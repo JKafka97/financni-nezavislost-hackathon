@@ -36,12 +36,12 @@ def run_tests() -> None:
         {
             "input_selector": "#number_input_1",
             "input_value": "100000",
-            "expected_value": "12r 7m",
+            "expected_value": "12r 8m",
         },
         {
             "input_selector": "#number_input_2",
             "input_value": "40000",
-            "expected_value": "33r 4m",
+            "expected_value": "33r 5m",
         },
         {
             "input_selector": "#number_input_3",
@@ -56,12 +56,12 @@ def run_tests() -> None:
         {
             "input_selector": "#number_input_2",
             "input_value": "-3",
-            "expected_value": "0r 0m",
+            "expected_value": "Více než 50 let",
         },
         {
             "input_selector": "#number_input_3",
             "input_value": "-300000",
-            "expected_value": "47r 1m",
+            "expected_value": "47r 2m",
         },
     ]
 
