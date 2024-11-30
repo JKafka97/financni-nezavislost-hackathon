@@ -20,7 +20,9 @@ col1 = st.columns(1)[0]
 
 with col1:
     st.subheader("Vaše údaje ✏️")
-    monthly_savings = st.number_input("Volná částka na investice (CZK)", value=30000, step=1000)
+    monthly_savings = st.number_input(
+        "Volná částka na investice (CZK)", value=30000, step=1000
+    )
     monthly_expenses = st.number_input("Měsíční náklady (CZK)", value=50000, step=1000)
     current_savings = st.number_input("Úspory (CZK)", value=600000, step=10000)
 
@@ -95,7 +97,9 @@ if metrics["years_to_fi"]:
         {"Milníky finanční nezávislosti (%)": milestones * 100, "Čas": milestone_years}
     )
     # Format data
-    milestone_data["Milníky finanční nezávislosti (%)"] = np.round(milestone_data["Milníky finanční nezávislosti (%)"]).astype(str)
+    milestone_data["Milníky finanční nezávislosti (%)"] = np.round(
+        milestone_data["Milníky finanční nezávislosti (%)"]
+    ).astype(str)
     milestone_data["Čas"] = milestone_data["Čas"].apply(
         lambda x: f"{int(x)}r {round((x - int(x)) * 12)}m"
     )

@@ -2,7 +2,10 @@ import plotly.graph_objects as go
 import pandas as pd
 import datetime
 
-def plot_investment(investment_data: pd.DataFrame, year_to_independence: int) -> go.Figure:
+
+def plot_investment(
+    investment_data: pd.DataFrame, year_to_independence: int
+) -> go.Figure:
     # Initialize the figure
     fig = go.Figure()
 
@@ -11,8 +14,12 @@ def plot_investment(investment_data: pd.DataFrame, year_to_independence: int) ->
     investment_data["years"] = investment_data["years"] + curr_year
 
     # Format values for hover text
-    investment_data["formatted_portfolio"] = investment_data["portfolio_real"].apply(lambda x: f"{x:,.0f}".replace(",", " "))
-    investment_data["formatted_fi_target"] = investment_data["fi_target"].apply(lambda x: f"{x:,.0f}".replace(",", " "))
+    investment_data["formatted_portfolio"] = investment_data["portfolio_real"].apply(
+        lambda x: f"{x:,.0f}".replace(",", " ")
+    )
+    investment_data["formatted_fi_target"] = investment_data["fi_target"].apply(
+        lambda x: f"{x:,.0f}".replace(",", " ")
+    )
 
     # Add portfolio trace (investment growth)
     fig.add_trace(
@@ -22,7 +29,7 @@ def plot_investment(investment_data: pd.DataFrame, year_to_independence: int) ->
             name="Investiční portfolio",
             line=dict(color="#2ecc71"),
             hovertemplate="Investice: %{customdata} CZK<extra></extra>",
-            customdata=investment_data["formatted_portfolio"]
+            customdata=investment_data["formatted_portfolio"],
         )
     )
 
@@ -34,7 +41,7 @@ def plot_investment(investment_data: pd.DataFrame, year_to_independence: int) ->
             name="FN Cíl",
             line=dict(color="red"),
             hovertemplate="FI Cíl: %{customdata} CZK<extra></extra>",
-            customdata=investment_data["formatted_fi_target"]
+            customdata=investment_data["formatted_fi_target"],
         )
     )
 
@@ -46,9 +53,9 @@ def plot_investment(investment_data: pd.DataFrame, year_to_independence: int) ->
         hovermode="x unified",
         showlegend=True,
         template="plotly_white",
-        xaxis_tickformat='.0f',
+        xaxis_tickformat=".0f",
         legend=dict(font=dict(size=20)),
-        hoverlabel=dict(font=dict(size=16))
+        hoverlabel=dict(font=dict(size=16)),
     )
 
     # Add vertical dashed line for year of independence if specified
@@ -57,10 +64,12 @@ def plot_investment(investment_data: pd.DataFrame, year_to_independence: int) ->
         fig.add_vline(
             x=independence_year,
             line_dash="dash",
-            annotation_text=f"Rok nezávislosti! ({independence_year:,.0f})".replace(',', ''),
+            annotation_text=f"Rok nezávislosti! ({independence_year:,.0f})".replace(
+                ",", ""
+            ),
             annotation_position="bottom right",
             line_color="red",
-            annotation_font=dict(size=20)
+            annotation_font=dict(size=20),
         )
 
     return fig
