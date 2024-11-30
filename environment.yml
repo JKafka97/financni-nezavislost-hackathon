@@ -1,8 +1,8 @@
-name: my_environment
+name: myenv
 channels:
+  - conda-forge
   - defaults
 dependencies:
-  - python=3.12
   - altair=5.5.0
   - attrs=24.2.0
   - blinker=1.9.0
@@ -11,9 +11,12 @@ dependencies:
   - charset-normalizer=3.4.0
   - click=8.1.7
   - colorama=0.4.6
+  - coverage=7.6.8
   - gitdb=4.0.11
   - gitpython=3.1.43
+  - greenlet=3.1.1
   - idna=3.10
+  - iniconfig=2.0.0
   - jinja2=3.1.4
   - jsonschema=4.23.0
   - jsonschema-specifications=2024.10.1
@@ -25,17 +28,22 @@ dependencies:
   - packaging=24.2
   - pandas=2.2.3
   - pillow=11.0.0
+  - playwright=1.49.0
   - plotly=5.24.1
+  - pluggy=1.5.0
   - protobuf=5.29.0
   - pyarrow=18.1.0
   - pydeck=0.9.1
+  - pyee=12.0.0
   - pygments=2.18.0
+  - pytest=8.3.3
   - python-dateutil=2.9.0.post0
   - pytz=2024.2
   - referencing=0.35.1
   - requests=2.32.3
   - rich=13.9.4
   - rpds-py=0.21.0
+  - ruff=0.8.1
   - six=1.16.0
   - smmap=5.0.1
   - streamlit=1.40.2
@@ -46,3 +54,5 @@ dependencies:
   - tzdata=2024.2
   - urllib3=2.2.3
   - watchdog=6.0.0
+  - pip:
+      - some_pip_package  # if you have any pip-specific packages to install

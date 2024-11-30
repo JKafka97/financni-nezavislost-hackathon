@@ -1,12 +1,5 @@
-# Import libraries
 import pandas as pd
-import sys
-import os
-
-sys.path.insert(
-    0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../app"))
-)
-from calculation import calculate_fi_number, calculate_fi_metrics
+from app.fi_calculation import calculate_fi_number, calculate_fi_metrics
 
 
 ################################################################################################

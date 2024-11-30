@@ -1,8 +1,8 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-from calculation import calculate_fi_metrics
-from visual import plot_investment
+from fi_calculation import calculate_fi_metrics
+from fi_visual import plot_investment
 
 # Configure the page title and layout
 st.set_page_config(page_title="Path to Financial FREEDOM!", layout="wide")
