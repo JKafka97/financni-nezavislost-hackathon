@@ -29,11 +29,13 @@ def test_plot_investment_titles():
     )
     fig = plot_investment(sample_investment_data, year_to_independence=0)
     layout = fig.layout
-    assert (
-        "Cesta k finanční NEZÁVISLOSTI!" in str(layout.title)
+    assert "Cesta k finanční NEZÁVISLOSTI!" in str(
+        layout.title
     )  # Check if the title is correct
-    assert "Roky" in  str(layout.xaxis.title) # Check if the x-axis title is correct
-    assert "Částka (CZK)" in str(layout.yaxis.title) # Check if the y-axis title is correct
+    assert "Roky" in str(layout.xaxis.title)  # Check if the x-axis title is correct
+    assert "Částka (CZK)" in str(
+        layout.yaxis.title
+    )  # Check if the y-axis title is correct
 
 
 def test_plot_investment_is_figure():
