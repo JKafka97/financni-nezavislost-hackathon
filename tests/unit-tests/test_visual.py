@@ -1,53 +1,61 @@
-import plotly.graph_objects as go
+import pytest
 import pandas as pd
-from app.fi_visual import plot_investment
+import datetime
+from app.visual import plot_investment
+from plotly.graph_objects import Figure
 
 
-################################################################################################
-def test_plot_investment_trace_count():
-    sample_investment_data = pd.DataFrame(
+@pytest.fixture
+def sample_data():
+    return pd.DataFrame(
         {
-            "years": [0, 1, 2, 3, 4],
-            "portfolio_real": [100000, 120000, 150000, 180000, 220000],
-            "fi_target": [150000, 160000, 170000, 180000, 190000],
+            "years": [0, 1, 2],
+            "portfolio_real": [100000, 200000, 300000],
+            "fi_target": [500000, 500000, 500000],
         }
     )
-    # Test the number of traces created
-    fig = plot_investment(sample_investment_data, year_to_independence=3)
-    assert (
-        len(fig.data) == 2
-    )  # Should have 2 traces: one for the portfolio and one for the FI target
 
 
-def test_plot_investment_titles():
-    sample_investment_data = pd.DataFrame(
-        {
-            "years": [0, 1, 2, 3, 4],
-            "portfolio_real": [100000, 120000, 150000, 180000, 220000],
-            "fi_target": [150000, 160000, 170000, 180000, 190000],
-        }
-    )
-    fig = plot_investment(sample_investment_data, year_to_independence=0)
-    layout = fig.layout
-    assert "Cesta k finanční NEZÁVISLOSTI!" in str(
-        layout.title
-    )  # Check if the title is correct
-    assert "Roky" in str(layout.xaxis.title)  # Check if the x-axis title is correct
-    assert "Částka (CZK)" in str(
-        layout.yaxis.title
-    )  # Check if the y-axis title is correct
+def test_plot_investment_structure(sample_data):
+    curr_year = datetime.datetime.now().year
+    fig = plot_investment(sample_data.copy(), 5)
+
+    assert isinstance(fig, Figure)
+
+    assert len(fig.data) == 2
+    assert fig.data[0].name == "Investiční portfolio"
+    assert fig.data[1].name == "FN Cíl"
+
+    expected_years = [curr_year, curr_year + 1, curr_year + 2]
+    assert list(fig.data[0].x) == expected_years
+    assert list(fig.data[1].x) == expected_years
 
 
-def test_plot_investment_is_figure():
-    sample_investment_data = pd.DataFrame(
-        {
-            "years": [0, 1, 2, 3, 4],
-            "portfolio_real": [100000, 120000, 150000, 180000, 220000],
-            "fi_target": [150000, 160000, 170000, 180000, 190000],
-        }
-    )
-    fig = plot_investment(sample_investment_data, year_to_independence=0)
-    assert isinstance(fig, go.Figure)
+def test_formatted_values(sample_data):
+    fig = plot_investment(sample_data.copy(), 5)
+
+    formatted_portfolio = ["100 000", "200 000", "300 000"]
+    formatted_fi_target = ["500 000", "500 000", "500 000"]
+    assert list(fig.data[0].customdata) == formatted_portfolio
+    assert list(fig.data[1].customdata) == formatted_fi_target
 
 
-################################################################################################
+def test_independence_year(sample_data):
+    fig = plot_investment(sample_data.copy(), 5)
+
+    annotations = [
+        a.text for a in fig.layout.annotations if "Rok nezávislosti!" in a.text
+    ]
+    assert len(annotations) == 1
+
+    independence_year = datetime.datetime.now().year + 5
+    assert f"{independence_year:,}" in annotations[0]
+
+
+def test_layout_settings(sample_data):
+    fig = plot_investment(sample_data.copy(), 5)
+
+    assert fig.layout.title.text == "Cesta k finanční NEZÁVISLOSTI!"
+    assert fig.layout.xaxis.title.text == "Roky"
+    assert fig.layout.yaxis.title.text == "Částka (CZK)"
+    assert fig.layout.hovermode == "x unified"
