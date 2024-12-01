@@ -1,4 +1,5 @@
 import streamlit as st
+import numpy as np
 import pandas as pd
 from calculation import calculate_fi_metrics
 from visual import plot_investment
@@ -70,20 +71,22 @@ st.plotly_chart(
 
 # Milestones Analysis
 st.subheader("Analýza milníků")
-if metrics["years_to_fi"]:
-    milestones = pd.DataFrame(
-        {
-            "Milníky finanční nezávislosti (%)": [25, 50, 75, 100],
-            "Čas": [
-                metrics["years_to_fi"] * 0.25,
-                metrics["years_to_fi"] * 0.5,
-                metrics["years_to_fi"] * 0.75,
-                metrics["years_to_fi"],
-            ],
-        }
-    )
-    milestones["Čas"] = milestones["Čas"].apply(format_time)
-    st.dataframe(milestones, hide_index=True)
+milestones = np.array([0.25, 0.5, 0.75, 1.0])
+years_to_independance = metrics["years_to_fi"]
+milestones_string = np.array(["25", "50", "70", "100"])
+milestone_years = milestones * years_to_independance
+
+milestone_data = pd.DataFrame(
+    {"Milníky finanční nezávislosti (%)": milestones_string, "Čas": milestone_years}
+)
+
+milestone_data["Čas"] = milestone_data["Čas"].apply(
+    lambda x: f"{int(x)}r {round((x - int(x)) * 12)}m"
+)
+
+# Display 'Analýza milníků' table
+if not milestone_data.empty:
+    st.dataframe(milestone_data, hide_index=True, use_container_width=True)
 
 st.markdown(
     """
